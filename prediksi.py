@@ -58,7 +58,7 @@ def show_predict():
         return
 
     # Train Model
-    model_file = 'repeat_buying_model.pkl'
+    model_file = os.path.join(os.path.dirname(__file__), 'repeat_buying_model.pkl')
     if os.path.exists(model_file):
         model = joblib.load(model_file)
         features = ['jml_kemunculan', 'biaya_formulir', 'biaya_paket',
