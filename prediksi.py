@@ -110,7 +110,7 @@ def show_predict():
     # Prediksi Repeat Buying
     st.markdown("## 🔮 Prediksi Repeat Buying Tahun 2526")
     input_data = {
-        'jml_kemunculan': st.slider("Jumlah Kemunculan", min_value=0, max_value=8, value=1, step=1),
+        'jml_kemunculan': st.slider("Berapa kali ikut NF", min_value=0, max_value=8, value=1, step=1),
         'biaya_formulir': st.slider("Biaya Formulir", min_value=0, max_value=1000000, value=50000, step=10000),
         'biaya_paket': st.slider("Biaya Paket", min_value=0, max_value=10000000, value=2000000, step=100000),
         'jumlah_biaya': st.slider("Jumlah Biaya", min_value=0, max_value=10000000, value=2500000, step=100000),
