@@ -6,7 +6,6 @@ from sklearn.metrics import accuracy_score, classification_report
 import joblib
 import os
 
-
 def show_predict():
     # Path atau URL file CSV
     file_url = "https://drive.google.com/uc?id=1FMmS1amyKNxGOPdNdocpY1Gkt4CMYLql"
