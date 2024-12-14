@@ -21,11 +21,10 @@ def load_data(url):
 def train_model(data, model_file):
     st.info("Melatih model baru...")
     # Preprocessing data untuk model
-    data['jml_kemunculan'] = data.groupby('nonf')['idtahun'].transform('count')
-    data['repeat_buying'] = (data['jml_kemunculan'] > 1).astype(int)
+    data['repeat_buying'] = (data['biaya_paket'] > 0).astype(int)  # Dummy target
 
-    features = ['jml_kemunculan', 'biaya_formulir', 'biaya_paket', 
-                'jumlah_biaya', 'jumlah_bayar', 'tagihan', 'idtahun']
+    features = ['biaya_formulir', 'biaya_paket', 'jumlah_biaya', 
+                'jumlah_bayar', 'tagihan', 'idtahun']
     target = 'repeat_buying'
 
     data = data[features + [target]].dropna()
@@ -50,8 +49,8 @@ def load_or_train_model(data, model_file):
         try:
             model = joblib.load(model_file)
             st.success("Model berhasil dimuat.")
-            features = ['jml_kemunculan', 'biaya_formulir', 'biaya_paket', 
-                        'jumlah_biaya', 'jumlah_bayar', 'tagihan', 'idtahun']
+            features = ['biaya_formulir', 'biaya_paket', 'jumlah_biaya', 
+                        'jumlah_bayar', 'tagihan', 'idtahun']
             return model, features
         except Exception as e:
             st.warning(f"Error saat memuat model: {e}. Melatih ulang model...")
@@ -110,12 +109,11 @@ def show_predict():
     # Prediksi Repeat Buying
     st.markdown("## 🔮 Prediksi Repeat Buying Tahun 2526")
     input_data = {
-        'jml_kemunculan': st.number_input("Jumlah Kemunculan Sebelumnya", min_value=0, max_value=10, value=1),
-        'biaya_formulir': st.number_input("Biaya Formulir", min_value=0, value=500000),
-        'biaya_paket': st.number_input("Biaya Paket", min_value=0, value=1000000),
-        'jumlah_biaya': st.number_input("Jumlah Biaya", min_value=0, value=1500000),
-        'jumlah_bayar': st.number_input("Jumlah Bayar", min_value=0, value=1400000),
-        'tagihan': st.number_input("Tagihan", min_value=0, value=100000),
+        'biaya_formulir': st.slider("Biaya Formulir", min_value=0, max_value=1000000, value=50000, step=10000),
+        'biaya_paket': st.slider("Biaya Paket", min_value=0, max_value=10000000, value=2000000, step=100000),
+        'jumlah_biaya': st.slider("Jumlah Biaya", min_value=0, max_value=10000000, value=2500000, step=100000),
+        'jumlah_bayar': st.slider("Jumlah Bayar", min_value=0, max_value=10000000, value=2400000, step=100000),
+        'tagihan': st.slider("Tagihan", min_value=0, max_value=1000000, value=50000, step=10000),
         'idtahun': 2526
     }
 
